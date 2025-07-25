@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Ads 360º - Por Paulo Berto</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS (Animate on Scroll) Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Alpine.js for interactivity -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        /* Custom styles for the "Arrojado" design */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; /* Dark background */
+            color: #e6edf3; /* Light text for dark background */
+        }
+
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-green: #16a34a;
+            --accent-purple: #8b5cf6;
+            --text-dark: #374151;
+            --text-light: #6b7280;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(90deg, var(--accent-purple), var(--secondary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        /* 3D Button Style */
+        .btn-3d {
+            position: relative;
+            border: none;
+            transition: all 0.1s linear;
+            box-shadow: 0 4px 0 #0e296b, 0 5px 5px 1px rgba(0,0,0,0.4);
+        }
+        .btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 #0e296b;
+        }
+
+        .btn-3d-secondary {
+            position: relative;
+            border: none;
+            transition: all 0.1s linear;
+            box-shadow: 0 4px 0 #107c36, 0 5px 5px 1px rgba(0,0,0,0.4);
+        }
+        .btn-3d-secondary:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 #107c36;
+        }
+
+        /* Gradient buttons */
+        .gradient-btn {
+            background-image: linear-gradient(to right, var(--primary-blue) 0%, var(--accent-purple) 51%, var(--primary-blue) 100%);
+            transition: 0.5s;
+            background-size: 200% auto;
+        }
+        .gradient-btn:hover {
+            background-position: right center;
+        }
+        
+        .gradient-btn-secondary {
+            background-image: linear-gradient(to right, var(--secondary-green) 0%, var(--accent-purple) 51%, var(--secondary-green) 100%);
+            transition: 0.5s;
+            background-size: 200% auto;
+        }
+        .gradient-btn-secondary:hover {
+            background-position: right center;
+        }
+
+        /* Glassmorphism effect */
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Glow effect */
+        .glow-box {
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4), 0 0 30px rgba(139, 92, 246, 0.2);
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Animated gradient background */
+        .animated-gradient-bg {
+            background: linear-gradient(-45deg, #0d1117, #1e3a8a, #16a34a, #0d1117);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+    <!-- 0. Navigation Bar (Fixed/Floating) -->
+    <header x-data="{ mobileMenuOpen: false }" class="glassmorphism fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl mx-auto rounded-xl z-50">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <a href="#" class="text-xl font-bold text-white">Total Ads 360º</a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#metodo" class="text-gray-300 hover:text-white transition-colors duration-300">Método</a>
+                    <a href="#modulos" class="text-gray-300 hover:text-white transition-colors duration-300">Módulos</a>
+                    <a href="#sobre" class="text-gray-300 hover:text-white transition-colors duration-300">Sobre</a>
+                    <a href="#faq" class="text-gray-300 hover:text-white transition-colors duration-300">FAQ</a>
+                </nav>
+                <a href="https://checkout.pauloberto.com.br/16529850" class="hidden md:inline-block gradient-btn btn-3d text-white font-semibold px-5 py-2 rounded-lg shadow-lg">
+                    Quero Fazer Anúncios 360º
+                </a>
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path :class="{'hidden': mobileMenuOpen}" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path><path :class="{'hidden': !mobileMenuOpen}" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+            </div>
+            <div x-show="mobileMenuOpen" x-transition class="md:hidden mt-4 space-y-2">
+                <a href="#metodo" @click="mobileMenuOpen = false" class="block px-4 py-2 text-gray-200 hover:bg-white/10 rounded-lg">Método</a>
+                <a href="#modulos" @click="mobileMenuOpen = false" class="block px-4 py-2 text-gray-200 hover:bg-white/10 rounded-lg">Módulos</a>
+                <a href="#sobre" @click="mobileMenuOpen = false" class="block px-4 py-2 text-gray-200 hover:bg-white/10 rounded-lg">Sobre</a>
+                <a href="#faq" @click="mobileMenuOpen = false" class="block px-4 py-2 text-gray-200 hover:bg-white/10 rounded-lg">FAQ</a>
+                <a href="https://checkout.pauloberto.com.br/16529850" @click="mobileMenuOpen = false" class="block w-full text-center gradient-btn btn-3d text-white font-semibold mt-4 px-5 py-3 rounded-lg shadow-md">
+                    Quero Fazer Anúncios 360º
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24">
+
+        <!-- 1. Hero Section -->
+        <section class="relative py-20 md:py-32 overflow-hidden">
+             <div class="absolute inset-0 bg-grid-white/[0.05] [mask-image:linear-gradient(to_bottom,white_5%,transparent_90%)]"></div>
+             <div class="absolute top-0 left-0 w-96 h-96 bg-accent-purple/20 rounded-full filter blur-3xl opacity-50 animate-blob"></div>
+             <div class="absolute top-1/2 right-0 w-96 h-96 bg-secondary-green/20 rounded-full filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="grid md:grid-cols-5 gap-12 items-center">
+                    <div class="md:col-span-3" data-aos="fade-right">
+                        <h1 class="text-4xl md:text-6xl font-black text-white leading-tight tracking-tighter">
+                            Como Descobri Por Que Anúncios <span class="gradient-text">Inteligentes e Estratégicos</span> Vendem Muito Mais Que Anúncios Criativos
+                        </h1>
+                        <p class="mt-6 text-lg text-gray-300">
+                            Após analisar mais de R$40 milhões em campanhas comprovei que anúncios eficazes falam com tipos específicos de personalidade, não com 'todo mundo'. Meu método ensina como fazer isso sistematicamente.
+                        </p>
+                        <a href="https://checkout.pauloberto.com.br/16529850" class="mt-10 inline-block gradient-btn-secondary btn-3d-secondary text-white font-bold text-xl px-10 py-5 rounded-lg shadow-lg">
+                            🎯 QUERO FAZER ANÚNCIOS 360º
+                        </a>
+                        <p class="mt-6 text-sm text-gray-400 font-semibold">
+                            Método testado com mais de R$40 milhões em campanhas
+                        </p>
+                    </div>
+                    <div class="md:col-span-2 flex flex-col items-center" data-aos="fade-left" data-aos-delay="200">
+                        <div class="relative">
+                            <img src="https://placehold.co/400x450/1a202c/8b5cf6?text=Paulo+Berto" alt="[Imagem de Paulo Berto em ambiente de negócios moderno]" class="rounded-xl shadow-2xl w-full max-w-sm object-cover z-10 relative">
+                             <div class="absolute -top-4 -left-4 w-full h-full border-2 border-accent-purple rounded-xl transform rotate-[-3deg]"></div>
+                             <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-green-500/20 rounded-full filter blur-2xl floating"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Problem Section -->
+        <section class="py-16 md:py-24">
+            <div class="container mx-auto px-6 text-center">
+                <div data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Por Que Anúncios 'Criativos' Fracassam Enquanto Anúncios <span class="gradient-text">Inteligentes</span> Vendem?</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">A realidade que 90% dos anunciantes ignora completamente.</p>
+                </div>
+
+                <div class="my-12 p-6 glassmorphism rounded-2xl inline-block" data-aos="zoom-in" data-aos-delay="200">
+                    <p class="text-3xl font-bold text-white">
+                        <span id="counter" class="gradient-text">0</span>+ estímulos por minuto vs <span class="text-green-400">6 posts</span> vistos
+                    </p>
+                    <p class="text-sm text-gray-400">A batalha pela atenção que você está perdendo.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 mt-12">
+                    <div class="glassmorphism p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="100">
+                        <div class="text-5xl mb-4">⏰</div>
+                        <h3 class="text-xl font-bold text-white">Desperdício de tempo</h3>
+                        <p class="mt-2 text-gray-400">Horas gastas em ajustes que o algoritmo faria melhor.</p>
+                    </div>
+                    <div class="glassmorphism p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="200">
+                        <div class="text-5xl mb-4">🎯</div>
+                        <h3 class="text-xl font-bold text-white">Limitação de alcance</h3>
+                        <p class="mt-2 text-gray-400">Segmentações que impedem o algoritmo de encontrar clientes.</p>
+                    </div>
+                    <div class="glassmorphism p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="300">
+                        <div class="text-5xl mb-4">🧠</div>
+                        <h3 class="text-xl font-bold text-white">Fadiga criativa</h3>
+                        <p class="mt-2 text-gray-400">Energia desperdiçada em tarefas técnicas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Solution Section (3 Pillars) -->
+        <section id="metodo" class="py-16 md:py-24 animated-gradient-bg">
+            <div class="container mx-auto px-6 text-center">
+                <div data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Apresentando o Curso <span class="gradient-text">Total Ads 360º</span></h2>
+                    <p class="mt-4 text-lg text-gray-300 max-w-3xl mx-auto">A metodologia que sincroniza seus anúncios com o comportamento humano.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 mt-12 text-center">
+                    <div class="bg-gray-800/50 p-8 rounded-2xl border border-white/10 shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                        <div class="text-5xl mb-4">👁️</div>
+                        <h3 class="text-xl font-bold text-white">ESTÍMULO (E)</h3>
+                        <p class="mt-2 text-gray-400">Técnicas para capturar atenção em feeds saturados.</p>
+                    </div>
+                    <div class="bg-gray-800/50 p-8 rounded-2xl border border-white/10 shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                        <div class="text-5xl mb-4">🧠</div>
+                        <h3 class="text-xl font-bold text-white">MENSAGEM (M)</h3>
+                        <p class="mt-2 text-gray-400">Estrutura para comunicar com diferentes perfis psicológicos.</p>
+                    </div>
+                    <div class="bg-gray-800/50 p-8 rounded-2xl border border-white/10 shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                        <div class="text-5xl mb-4">⚡</div>
+                        <h3 class="text-xl font-bold text-white">SENTIMENTO-AÇÃO (SA)</h3>
+                        <p class="mt-2 text-gray-400">Gatilhos que transformam interesse em cliques qualificados.</p>
+                    </div>
+                </div>
+                <div class="mt-12 glassmorphism p-6 rounded-lg font-semibold text-lg max-w-4xl mx-auto glow-box" data-aos="zoom-in" data-aos-delay="400">
+                    Cria conjuntos estratégicos de anúncios que funcionam em sinergia.
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Credibility Section -->
+        <section id="sobre" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div data-aos="fade-right" class="relative">
+                        <img src="https://placehold.co/500x600/1a202c/16a34a?text=Paulo+Berto" alt="[Imagem grande e profissional de Paulo Berto]" class="rounded-xl shadow-2xl w-full relative z-10">
+                        <div class="absolute inset-0 bg-accent-purple/20 rounded-xl filter blur-2xl -translate-x-4 translate-y-4"></div>
+                    </div>
+                    <div data-aos="fade-left" data-aos-delay="200">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white">Por Que Confiar No Curso <span class="gradient-text">Total Ads 360º?</span></h2>
+                        <div class="mt-6 space-y-4 text-gray-300 border-l-2 border-accent-purple pl-4">
+                            <p>📊 <strong>+10 anos</strong> em Marketing Digital</p>
+                            <p>💰 <strong>+R$40 Milhões</strong> Gerenciados</p>
+                            <p>🎓 <strong>Físico</strong> pela UNICAMP</p>
+                            <p>🤝 <strong>Ex-sócio</strong> de Raiam Santos</p>
+                        </div>
+                        <p class="mt-6 text-gray-300">
+                            Desenvolveu metodologia única que combina rigor analítico com comportamento humano nas redes sociais. Resultado de uma década aperfeiçoando a criação de anúncios que realmente convertem.
+                        </p>
+                        <div class="mt-8 glassmorphism p-6 rounded-lg font-semibold border-l-4 border-green-400">
+                            "Aplicado em e-commerces, infoprodutos, B2B, serviços, sempre com aumento de escala e redução de custos."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Offer Section -->
+        <section id="modulos" class="py-16 md:py-24 bg-gray-900/50">
+            <div class="container mx-auto px-6">
+                <div class="text-center" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">O Que Você Receberá No Curso <span class="gradient-text">Total Ads 360º</span></h2>
+                </div>
+                <div class="my-12 max-w-4xl mx-auto" data-aos="zoom-in-up" data-aos-delay="200">
+                    <img src="https://placehold.co/900x500/0d1117/8b5cf6?text=Mockup+Moderno+da+Plataforma" alt="[Mockup da plataforma do curso com design moderno]" class="rounded-xl shadow-2xl w-full border border-white/10">
+                </div>
+                <div class="max-w-3xl mx-auto" x-data="{ openAccordion: 1 }">
+                    <div class="space-y-4">
+                        <div class="glassmorphism rounded-lg" data-aos="fade-up"><button @click="openAccordion = (openAccordion === 1 ? null : 1)" class="w-full flex justify-between items-center p-5 text-left font-semibold text-white"><span class="flex items-center">📚<span class="ml-3">Módulo Introdutório: A Revolução</span></span><svg :class="{'rotate-180': openAccordion === 1}" class="w-5 h-5 text-accent-purple transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg></button><div x-show="openAccordion === 1" x-collapse class="p-5 pt-0 text-gray-400">A base para pensar como um anunciante de elite.</div></div>
+                        <div class="glassmorphism rounded-lg" data-aos="fade-up"><button @click="openAccordion = (openAccordion === 2 ? null : 2)" class="w-full flex justify-between items-center p-5 text-left font-semibold text-white"><span class="flex items-center">📊<span class="ml-3">Módulo 1 - Estímulo</span></span><svg :class="{'rotate-180': openAccordion === 2}" class="w-5 h-5 text-accent-purple transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg></button><div x-show="openAccordion === 2" x-collapse class="p-5 pt-0 text-gray-400">Vença a guerra da atenção e capture o clique.</div></div>
+                        <div class="glassmorphism rounded-lg" data-aos="fade-up"><button @click="openAccordion = (openAccordion === 3 ? null : 3)" class="w-full flex justify-between items-center p-5 text-left font-semibold text-white"><span class="flex items-center">💬<span class="ml-3">Módulo 2 - Mensagem</span></span><svg :class="{'rotate-180': openAccordion === 3}" class="w-5 h-5 text-accent-purple transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg></button><div x-show="openAccordion === 3" x-collapse class="p-5 pt-0 text-gray-400">A comunicação 360° que conecta e vende.</div></div>
+                        <div class="glassmorphism rounded-lg" data-aos="fade-up"><button @click="openAccordion = (openAccordion === 4 ? null : 4)" class="w-full flex justify-between items-center p-5 text-left font-semibold text-white"><span class="flex items-center">❤️<span class="ml-3">Módulo 3 - Sentimento-Ação</span></span><svg :class="{'rotate-180': openAccordion === 4}" class="w-5 h-5 text-accent-purple transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg></button><div x-show="openAccordion === 4" x-collapse class="p-5 pt-0 text-gray-400">Crie cliques que realmente vendem.</div></div>
+                        <div class="glassmorphism rounded-lg" data-aos="fade-up"><button @click="openAccordion = (openAccordion === 5 ? null : 5)" class="w-full flex justify-between items-center p-5 text-left font-semibold text-white"><span class="flex items-center">⚙️<span class="ml-3">Módulo 4 - Framework</span></span><svg :class="{'rotate-180': openAccordion === 5}" class="w-5 h-5 text-accent-purple transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg></button><div x-show="openAccordion === 5" x-collapse class="p-5 pt-0 text-gray-400">Sua esteira de produção de anúncios.</div></div>
+                        <div class="glassmorphism rounded-lg" data-aos="fade-up"><button @click="openAccordion = (openAccordion === 6 ? null : 6)" class="w-full flex justify-between items-center p-5 text-left font-semibold text-white"><span class="flex items-center">🎯<span class="ml-3">Módulo 5 - Estudos de Caso</span></span><svg :class="{'rotate-180': openAccordion === 6}" class="w-5 h-5 text-accent-purple transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg></button><div x-show="openAccordion === 6" x-collapse class="p-5 pt-0 text-gray-400">Análise de campanhas reais e de sucesso.</div></div>
+                        <div class="bg-green-500/10 border border-green-500 rounded-lg" data-aos="fade-up"><button @click="openAccordion = (openAccordion === 7 ? null : 7)" class="w-full flex justify-between items-center p-5 text-left font-bold text-green-400"><span class="flex items-center">🤖<span class="ml-3">BÔNUS: Arsenal de Prompts IA</span></span><svg :class="{'rotate-180': openAccordion === 7}" class="w-5 h-5 text-green-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg></button><div x-show="openAccordion === 7" x-collapse class="p-5 pt-0 text-green-300">Use IA para acelerar sua criação de anúncios.</div></div>
+                    </div>
+                </div>
+                <div class="mt-12 max-w-md mx-auto bg-white p-8 rounded-xl shadow-2xl text-center" data-aos="fade-up" data-aos-delay="300">
+                    <p class="text-lg font-semibold text-gray-500 line-through">De R$639</p>
+                    <h3 class="text-xl font-bold text-gray-800">por apenas</h3>
+                    <p class="text-5xl font-extrabold my-2"><span class="gradient-text">12x de R$ 37,05</span></p>
+                    <p class="text-lg font-semibold text-gray-800">ou <span class="text-green-600 font-bold">R$ 369,00</span> à vista</p>
+                    <a href="https://checkout.pauloberto.com.br/16529850" class="mt-6 inline-block w-full gradient-btn-secondary btn-3d-secondary text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg">
+                        GARANTIR MINHA VAGA AGORA
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. FAQ Section -->
+        <section id="faq" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Perguntas Frequentes</h2>
+                </div>
+                <div class="max-w-3xl mx-auto" x-data="{ openFaq: null }">
+                    <div class="space-y-4">
+                        <div class="glassmorphism rounded-lg" data-aos="fade-up"><button @click="openFaq = (openFaq === 1 ? null : 1)" class="w-full flex justify-between items-center p-5 text-left font-semibold text-white"><span>Preciso ter experiência prévia?</span><svg :class="{'rotate-45': openFaq === 1}" class="w-5 h-5 text-accent-purple transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg></button><div x-show="openFaq === 1" x-collapse class="p-5 pt-0 text-gray-400">Não. Foi desenvolvido para iniciantes e experientes.</div></div>
+                        <div class="glassmorphism rounded-lg" data-aos="fade-up"><button @click="openFaq = (openFaq === 2 ? null : 2)" class="w-full flex justify-between items-center p-5 text-left font-semibold text-white"><span>Funciona para qualquer negócio?</span><svg :class="{'rotate-45': openFaq === 2}" class="w-5 h-5 text-accent-purple transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg></button><div x-show="openFaq === 2" x-collapse class="p-5 pt-0 text-gray-400">Sim. É baseado em comportamento humano, não táticas de nicho.</div></div>
+                        <div class="glassmorphism rounded-lg" data-aos="fade-up"><button @click="openFaq = (openFaq === 3 ? null : 3)" class="w-full flex justify-between items-center p-5 text-left font-semibold text-white"><span>Em quanto tempo vejo resultados?</span><svg :class="{'rotate-45': openFaq === 3}" class="w-5 h-5 text-accent-purple transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg></button><div x-show="openFaq === 3" x-collapse class="p-5 pt-0 text-gray-400">Melhorias em engajamento imediatamente. Melhorias em custo/resultado em 2 semanas.</div></div>
+                        <div class="glassmorphism rounded-lg" data-aos="fade-up"><button @click="openFaq = (openFaq === 4 ? null : 4)" class="w-full flex justify-between items-center p-5 text-left font-semibold text-white"><span>Por que o preço é tão acessível?</span><svg :class="{'rotate-45': openFaq === 4}" class="w-5 h-5 text-accent-purple transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg></button><div x-show="openFaq === 4" x-collapse class="p-5 pt-0 text-gray-400">Conhecimento deve ser acessível. Outros cursos similares custam R$3.000-5.000.</div></div>
+                        <div class="glassmorphism rounded-lg" data-aos="fade-up"><button @click="openFaq = (openFaq === 5 ? null : 5)" class="w-full flex justify-between items-center p-5 text-left font-semibold text-white"><span>É relevante com as mudanças dos algoritmos?</span><svg :class="{'rotate-45': openFaq === 5}" class="w-5 h-5 text-accent-purple transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg></button><div x-show="openFaq === 5" x-collapse class="p-5 pt-0 text-gray-400">Sim. Foi desenvolvido para trabalhar EM SINCRONIA com algoritmos.</div></div>
+                        <div class="glassmorphism rounded-lg" data-aos="fade-up"><button @click="openFaq = (openFaq === 6 ? null : 6)" class="w-full flex justify-between items-center p-5 text-left font-semibold text-white"><span>Como funciona a garantia?</span><svg :class="{'rotate-45': openFaq === 6}" class="w-5 h-5 text-accent-purple transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg></button><div x-show="openFaq === 6" x-collapse class="p-5 pt-0 text-gray-400">Você tem o direito de solicitar o reembolso integral do valor pago dentro do prazo de 7 dias corridos a partir da data da compra, conforme estabelece o art. 49 do Código de Defesa do Consumidor (Lei nº 8.078/1990). Para isso, basta enviar sua solicitação para o e-mail: contato@pauloberto.com.br</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Final CTA Section -->
+        <section id="cta-final" class="py-16 md:py-24 animated-gradient-bg">
+            <div class="container mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div data-aos="fade-right" class="flex flex-col text-center md:text-left">
+                        <div class="w-full flex flex-col items-center md:items-start">
+                            <h2 class="text-4xl md:text-5xl font-extrabold text-white">Transforme Seus Anúncios Agora</h2>
+                            <p class="mt-4 text-lg text-gray-300 font-semibold">Vagas limitadas - últimas 3 turmas esgotaram em 72h.</p>
+                            <ul class="mt-8 space-y-3 text-white text-lg">
+                                <li class="flex items-center justify-center md:justify-start"><span class="text-green-400 mr-3">✓</span>Liberte seu tempo</li>
+                                <li class="flex items-center justify-center md:justify-start"><span class="text-green-400 mr-3">✓</span>Sincronize com algoritmos</li>
+                                <li class="flex items-center justify-center md:justify-start"><span class="text-green-400 mr-3">✓</span>Escale com confiança</li>
+                            </ul>
+                            <p class="mt-8 text-xl text-white font-bold">De <span class="line-through text-gray-400">R$639</span> por <span class="text-green-400">12x R$ 37,05</span> ou <span class="text-green-400">R$ 369,00</span></p>
+                            <a href="https://checkout.pauloberto.com.br/16529850" class="mt-8 block w-full md:inline-block md:w-auto text-center gradient-btn-secondary btn-3d-secondary text-white font-bold text-xl px-10 py-5 rounded-lg shadow-2xl animate-pulse">
+                                🚀 QUERO TRANSFORMAR MEUS ANÚNCIOS AGORA
+                            </a>
+                        </div>
+                        <div class="mt-6 w-full flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-4 text-gray-300 text-sm">
+                            <span>✅ Acesso vitalício</span>
+                            <span>✅ Suporte incluso</span>
+                            <span>✅ Resultados comprovados</span>
+                        </div>
+                    </div>
+                    <div class="hidden md:block" data-aos="fade-left" data-aos-delay="200">
+                        <img src="https://placehold.co/500x400/0d1117/16a34a?text=Curso+Total+Ads+360º" alt="[Mockup do curso com efeito flutuante]" class="rounded-xl shadow-2xl floating">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 8. Footer -->
+    <footer class="bg-gray-900 text-gray-500 py-8 border-t border-white/10">
+        <div class="container mx-auto px-6 text-center text-sm">
+            <p>Curso Total Ads 360º © 2025 | Por Paulo Berto</p>
+            <p class="mt-2">Contato: suporte@totalads360.com</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="hover:text-white transition-colors">Termos</a>
+                <span>·</span>
+                <a href="#" class="hover:text-white transition-colors">Privacidade</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            duration: 800,
+            easing: 'ease-in-out',
+        });
+
+        // Corrected Animated Counter using requestAnimationFrame
+        function animateCounter(el, endValue, duration) {
+            let start = 0;
+            let startTime = null;
+
+            function animation(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / duration, 1);
+                
+                let currentValue = Math.floor(progress * (endValue - start) + start);
+                el.textContent = currentValue.toLocaleString('pt-BR');
+
+                if (progress < 1) {
+                    requestAnimationFrame(animation);
+                } else {
+                    el.textContent = endValue.toLocaleString('pt-BR');
+                }
+            }
+            requestAnimationFrame(animation);
+        }
+
+        const counterEl = document.getElementById('counter');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Animate to 120,000 in 10 seconds (10000 ms)
+                    animateCounter(counterEl, 120000, 10000);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        if(counterEl) {
+            observer.observe(counterEl);
+        }
+    </script>
+</body>
+</html>
